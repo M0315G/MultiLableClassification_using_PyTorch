@@ -9,7 +9,7 @@ def train(model, dataloader, optimizer, criterion, train_data, device):
     model.train()
     counter = 0
     train_running_loss = 0.0
-    for i, data in tqdm( enumerate(dataloader), total=int(len(train_data)/dataloader.batch_size)):
+    for i, data in tqdm(enumerate(dataloader), total=int(len(train_data)/dataloader.batch_size)):
         counter += 1
         data, target = data['image'].to(device), data['label'].to(device)
         optimizer.zero_grad()
