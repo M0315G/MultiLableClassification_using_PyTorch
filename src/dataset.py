@@ -27,7 +27,7 @@ class ImageDataset(Dataset):
 
             # define the training transform
             self.transform = transforms.Compose([
-                transfrosm.ToOILImage(),
+                transforms.ToPILImage(),
                 transforms.Resize((400, 400)),
                 transforms.RandomHorizontalFlip(p=0.5),
                 transforms.RandomRotation(degrees=45),
@@ -37,7 +37,7 @@ class ImageDataset(Dataset):
         elif self.validation == True:
             print(f"Number of Validation images: {self.valid_len}")
             self.image_names = list(self.all_image_names[-self.valid_len:-10])
-            self.labels = list(self.all_labels[-self.valid_ratio:])
+            self.labels = list(self.all_labels[-self.valid_len:])
 
             # define the validatio transform
             self.transform = transforms.Compose([

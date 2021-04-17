@@ -26,7 +26,8 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 criterion = nn.BCELoss()
 
 # read the training csv file
-train_csv = pd.read_csv('')
+train_csv = pd.read_csv(
+    '../input/movie-classifier/Multi_Label_dataset/train.csv')
 
 # train dataset
 train_data = ImageDataset(train_csv, train=True, validation=False, test=False)
@@ -35,16 +36,16 @@ train_data = ImageDataset(train_csv, train=True, validation=False, test=False)
 valid_data = ImageDataset(train_csv, train=False, validation=True, test=False)
 
 # train data loader
-train_dataloader = DataLoader(
+train_loader = DataLoader(
     train_data,
-    batch_size = batch_size,
-    shuffle = True
+    batch_size=batch_size,
+    shuffle=True
 )
 
 # validation data loader
 valid_loader = DataLoader(
     valid_data,
-    batch_size = batch_size,
+    batch_size=batch_size,
     shuffle=True
 )
 
@@ -54,26 +55,26 @@ valid_loss = []
 
 for epoch in range(epochs):
     print(f"Epoch ", epoch+1, " of {epochs}")
-    
+
     train_epoch_loss = train(
-        model, train_loader, optimizer, criterion, train_data, device 
+        model, train_loader, optimizer, criterion, train_data, device
     )
     valid_epoch_loss = validate(
         model, valid_loader, optimizer, criterion, valid_data, device
     )
-    
+
     train_loss.append(train_epoch_loss)
     valid_loss.append(valid_epoch_loss)
-    
+
     print(f"Train Loss: {train_epoch_loss:.4f}")
     print(f"Val Loss: {valid_epoch_loss:.4f}")
-    
+
     torch.sabe({
-        'epoch':epochs,
-        'model_state_dict':model.state_dict(),
-        'optimizer_state_dict':optimizer.state_dict(),
-        'loss': criterion,}. '../outputs/model.pth')
-    
+        'epoch': epochs,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'loss': criterion, }, '../outputs/model.pth')
+
     # plot and save the train and validation line graphs
     plt.figure(figsize=(10, 7))
     plt.plot(train_loss, color='orange', label='train loss')
